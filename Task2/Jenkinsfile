@@ -7,9 +7,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                docker build -t jasonatkins/task2-db ./db
-                docker build -t jasonatkins/task2-nginx ./nginx
-                docker build -t jasonatkins/task2-app ./flask-app
+                docker build -t jasonatkins/task2-db Task2/db
+                docker build -t jasonatkins/task2-nginx Task2/nginx
+                docker build -t jasonatkins/task2-app Task2/flask-app
                 '''
             }
 
