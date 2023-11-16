@@ -38,7 +38,7 @@ pipeline {
                     docker stop mysql && echo "Stopped mysql" || echo "mysql is not running"
                     docker rm mysql && echo "removed mysql" || echo "mysql does not exist"
                     docker run -d  --name mysql --network task2-net jasonatkins/task2-db
-                    docker run -d  --name flask-app --network task2-net -e YOUR_NAME=${YOUR_NAME} jasonatkins/task2-app
+                    docker run -d  --name flask-app --network task2-net -e MYSQL_ROOT_PASSWORD=${YOUR_NAME} jasonatkins/task2-app
                     docker run -d --name nginx1 --network task2-net -p 80:80 jasonatkins/task2-nginx
                 '''
             }
