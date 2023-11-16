@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''
                     ssh jenkins@jason-deploy <<EOF
-                    export YOUR_NAME=${YOUR_NAME}
+                    export YOUR_NAME="${YOUR_NAME}"
                     docker network rm task2-net && echo "task2-net removed" || echo "task2-net did not exist"
                     docker network create task2-net
                     docker stop nginx1 && echo "Stopped nginx1" || echo "nginx1 is not running"
@@ -37,8 +37,8 @@ pipeline {
                     docker rm flask-app && echo "removed flask-app" || echo "flask-app does not exist"
                     docker stop mysql && echo "Stopped mysql" || echo "mysql is not running"
                     docker rm mysql && echo "removed mysql" || echo "mysql does not exist"
-                    docker run -d  --name mysql --network task2-net jasonatkins/task2-db
-                    docker run -d  --name flask-app --network task2-net -e MYSQL_ROOT_PASSWORD=${YOUR_NAME} jasonatkins/task2-app
+                    docker run -d  --name mysql --network task2-net -e MYSQL_ROOT_PASSWORD="${YOUR_NAME}" jasonatkins/task2-db
+                    docker run -d  --name flask-app --network task2-net -e MYSQL_ROOT_PASSWORD="${YOUR_NAME}" jasonatkins/task2-app
                     docker run -d --name nginx1 --network task2-net -p 80:80 jasonatkins/task2-nginx
                 '''
             }
