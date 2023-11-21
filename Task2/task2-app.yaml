@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  containers:
+  - name: app
+    image: jasonatkins/task2-app:latest
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+spec:
+  type: LoadBalancer
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000

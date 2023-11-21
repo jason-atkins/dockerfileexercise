@@ -28,6 +28,9 @@ pipeline {
             steps {
                 sh '''
                     ssh jenkins@jason-deploy <<EOF
+                    docker pull jasonatkins/task2-db
+                    docker pull jasonatkins/task2-nginx
+                    docker pull jasonatkins/task2-app
                     export YOUR_NAME="${YOUR_NAME}"
                     docker network rm task2-net && echo "task2-net removed" || echo "task2-net did not exist"
                     docker network create task2-net
