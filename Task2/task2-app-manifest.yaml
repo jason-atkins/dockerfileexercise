@@ -12,7 +12,7 @@ spec:
     - name: MYSQL_ROOT_PASSWORD
       valueFrom: 
         secredKeyRef:
-          name: db-root-paaaword
+          name: db-root-password
           key: password
     imagePullPolicy: Always
 ---
