@@ -11,7 +11,7 @@ spec:
     env:
     - name: MYSQL_ROOT_PASSWORD
       valueFrom: 
-        secredKeyRef:
+        secretKeyRef:
           name: db-root-password
           key: password
     imagePullPolicy: Always
