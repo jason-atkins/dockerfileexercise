@@ -27,7 +27,7 @@ pipeline {
                 sh '''
                     sed -e 's,{{password}},'${MYSQL_ROOT_PASSWORD}',g;' Task2/db-password.yaml | kubectl apply -f -
                     kubectl apply -f Task2/task2-db-manifest.yaml
-                    kubectl apply -f Task2/nginx-configMap.yaml
+                    kubectl apply -f Task2/nginx-configmap.yaml
                     kubectl apply -f Task2/task2-app-manifest.yaml
                     kubectl apply -f Task2/nginx-manifest.yaml
                 '''
