@@ -8,7 +8,6 @@ pipeline {
             steps {
                 sh '''
                 docker build -t jasonatkins/task2-db Task2/db
-                docker build -t jasonatkins/task2-nginx Task2/nginx
                 docker build -t jasonatkins/task2-app Task2/flask-app
                 '''
             }
@@ -18,7 +17,6 @@ pipeline {
             steps {
                 sh '''
                 docker push jasonatkins/task2-db
-                docker push jasonatkins/task2-nginx
                 docker push jasonatkins/task2-app
                 '''
             }
@@ -27,22 +25,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    ssh jenkins@jason-deploy <<EOF
-                    docker pull jasonatkins/task2-db
-                    docker pull jasonatkins/task2-nginx
-                    docker pull jasonatkins/task2-app
-                    export YOUR_NAME="${YOUR_NAME}"
-                    docker network rm task2-net && echo "task2-net removed" || echo "task2-net did not exist"
-                    docker network create task2-net
-                    docker stop nginx1 && echo "Stopped nginx1" || echo "nginx1 is not running"
-                    docker rm nginx1 && echo "removed nginx1" || echo "nginx1 does not exist"
-                    docker stop flask-app && echo "Stopped flask-app" || echo "flask-app is not running"
-                    docker rm flask-app && echo "removed flask-app" || echo "flask-app does not exist"
-                    docker stop mysql && echo "Stopped mysql" || echo "mysql is not running"
-                    docker rm mysql && echo "removed mysql" || echo "mysql does not exist"
-                    docker run -d  --name mysql --network task2-net -e MYSQL_ROOT_PASSWORD="${YOUR_NAME}" jasonatkins/task2-db
-                    docker run -d  --name flask-app --network task2-net -e MYSQL_ROOT_PASSWORD="${YOUR_NAME}" jasonatkins/task2-app
-                    docker run -d --name nginx1 --network task2-net -p 80:80 jasonatkins/task2-nginx
+                    kubectl apply -f .
                 '''
             }
 

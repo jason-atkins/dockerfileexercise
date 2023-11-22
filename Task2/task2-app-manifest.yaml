@@ -11,6 +11,7 @@ spec:
     env:
     - name: MYSQL_ROOT_PASSWORD
       value: password
+    imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
